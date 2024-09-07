@@ -31,9 +31,11 @@ Languages & Tools: Python, JavaScript, HTML, React, Java,R
 Future Focus: Mastering the MERN Stack
 
 **🌍 Explore My Work**
+
 Take a look at my projects on GitHub, where I combine my skills in databases, development, and dashboards to create impactful solutions.
 
 **🤝 Let’s Connect**
+
 Feel free to reach out to me on any of these platforms:
 
 💼 LinkedIn
