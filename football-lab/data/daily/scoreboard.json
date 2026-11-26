@@ -1,0 +1,17 @@
+{
+ "generated_at_utc": "2026-11-26 15:50",
+ "pipeline_version": "DAILY-1.0",
+ "engine_version": "GC-1.1",
+ "frozen_total": 0,
+ "predictions": 0,
+ "abstentions": 0,
+ "awaiting_result": 0,
+ "chain_intact": true,
+ "overall": {
+  "scored": 0
+ },
+ "by_competition": {},
+ "by_day": {},
+ "calibration": [],
+ "note": "Benchmark is the league base rate at freeze time and an always-home pick. No bookmaker prices are collected, so there is no market comparison here."
+}

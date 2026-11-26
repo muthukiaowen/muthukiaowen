@@ -1,0 +1,13 @@
+{
+ "checked_at_utc": "2026-11-26 15:50",
+ "status_http": 403,
+ "plan": null,
+ "active": null,
+ "requests": null,
+ "status_errors": "None",
+ "fixtures_today_http": 403,
+ "fixtures_today_count": null,
+ "fixtures_today_errors": "None",
+ "fixtures_today_leagues": 0,
+ "fixtures_today_sample": {}
+}
