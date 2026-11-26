@@ -17,17 +17,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Record start
+        run: echo "RUN_STARTED=$(date -u +'%Y-%m-%d %H:%M:%S')" >> "$GITHUB_ENV"
       - name: Offline tests
+        id: tests
         run: python football-lab/daily/test_run.py
       - name: Daily run
+        id: daily
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
           API_FOOTBALL_API_KEY: ${{ secrets.API_FOOTBALL_API_KEY }}
         run: python football-lab/daily/run.py
-      - name: Commit frozen predictions, results and scoreboard
+      - name: Record run evidence and commit
+        if: always()
         run: |
+          F=football-lab/data/daily/run_evidence.csv
+          [ -f "$F" ] || echo "run_id,run_attempt,event,started_utc,finished_utc,tests,daily_run,commit_before" > "$F"
+          echo "${{ github.run_id }},${{ github.run_attempt }},${{ github.event_name }},$RUN_STARTED,$(date -u +'%Y-%m-%d %H:%M:%S'),${{ steps.tests.outcome }},${{ steps.daily.outcome }},${{ github.sha }}" >> "$F"
           git config user.name "football-lab-bot"
           git config user.email "actions@users.noreply.github.com"
           git add football-lab/data/daily
-          git diff --cached --quiet || git commit -m "Football Lab: daily run $(date -u +'%Y-%m-%d %H:%M') UTC"
+          git commit -m "Football Lab: daily run $(date -u +'%Y-%m-%d %H:%M') UTC (run ${{ github.run_id }})"
           git push
