@@ -1,0 +1,338 @@
+{
+ "engine": "GC-1.1",
+ "source": "openfootball/football.json",
+ "season_files": 109,
+ "skipped_matches_insufficient_data": 8787,
+ "overall": {
+  "matches": 29709,
+  "accuracy": 0.4935,
+  "brier": 0.6111,
+  "logloss": 1.0202,
+  "base_brier": 0.6493,
+  "base_logloss": 1.0735,
+  "predicted_share": [
+   0.4439,
+   0.2417,
+   0.3144
+  ],
+  "actual_share": [
+   0.4432,
+   0.2512,
+   0.3056
+  ],
+  "picks_home_draw_away": [
+   19527,
+   220,
+   9962
+  ]
+ },
+ "by_league": {
+  "de.1": {
+   "matches": 3691,
+   "accuracy": 0.498,
+   "brier": 0.6132,
+   "logloss": 1.0242,
+   "base_brier": 0.648,
+   "base_logloss": 1.0718,
+   "predicted_share": [
+    0.4553,
+    0.2247,
+    0.32
+   ],
+   "actual_share": [
+    0.4497,
+    0.2419,
+    0.3083
+   ],
+   "picks_home_draw_away": [
+    2436,
+    7,
+    1248
+   ]
+  },
+  "en.1": {
+   "matches": 4766,
+   "accuracy": 0.5147,
+   "brier": 0.5994,
+   "logloss": 1.0047,
+   "base_brier": 0.644,
+   "base_logloss": 1.0653,
+   "predicted_share": [
+    0.4436,
+    0.2364,
+    0.32
+   ],
+   "actual_share": [
+    0.454,
+    0.2367,
+    0.3093
+   ],
+   "picks_home_draw_away": [
+    3066,
+    15,
+    1685
+   ]
+  },
+  "en.2": {
+   "matches": 6392,
+   "accuracy": 0.4391,
+   "brier": 0.6488,
+   "logloss": 1.0733,
+   "base_brier": 0.6553,
+   "base_logloss": 1.0823,
+   "predicted_share": [
+    0.4342,
+    0.2563,
+    0.3095
+   ],
+   "actual_share": [
+    0.4294,
+    0.2688,
+    0.3018
+   ],
+   "picks_home_draw_away": [
+    4309,
+    69,
+    2014
+   ]
+  },
+  "es.1": {
+   "matches": 4142,
+   "accuracy": 0.5056,
+   "brier": 0.5998,
+   "logloss": 1.0038,
+   "base_brier": 0.6427,
+   "base_logloss": 1.0644,
+   "predicted_share": [
+    0.4548,
+    0.2457,
+    0.2995
+   ],
+   "actual_share": [
+    0.4669,
+    0.2504,
+    0.2827
+   ],
+   "picks_home_draw_away": [
+    2828,
+    41,
+    1273
+   ]
+  },
+  "fr.1": {
+   "matches": 3249,
+   "accuracy": 0.4878,
+   "brier": 0.6127,
+   "logloss": 1.0216,
+   "base_brier": 0.6496,
+   "base_logloss": 1.0737,
+   "predicted_share": [
+    0.4469,
+    0.2466,
+    0.3065
+   ],
+   "actual_share": [
+    0.4398,
+    0.2499,
+    0.3102
+   ],
+   "picks_home_draw_away": [
+    2205,
+    27,
+    1017
+   ]
+  },
+  "it.1": {
+   "matches": 3843,
+   "accuracy": 0.5113,
+   "brier": 0.6008,
+   "logloss": 1.0058,
+   "base_brier": 0.6556,
+   "base_logloss": 1.0824,
+   "predicted_share": [
+    0.433,
+    0.2417,
+    0.3254
+   ],
+   "actual_share": [
+    0.4223,
+    0.2613,
+    0.3164
+   ],
+   "picks_home_draw_away": [
+    2371,
+    28,
+    1444
+   ]
+  },
+  "nl.1": {
+   "matches": 1772,
+   "accuracy": 0.5265,
+   "brier": 0.5812,
+   "logloss": 0.9762,
+   "base_brier": 0.6454,
+   "base_logloss": 1.0682,
+   "predicted_share": [
+    0.4659,
+    0.2137,
+    0.3204
+   ],
+   "actual_share": [
+    0.4526,
+    0.2415,
+    0.3059
+   ],
+   "picks_home_draw_away": [
+    1184,
+    3,
+    585
+   ]
+  },
+  "pt.1": {
+   "matches": 1854,
+   "accuracy": 0.5318,
+   "brier": 0.5804,
+   "logloss": 0.9755,
+   "base_brier": 0.6502,
+   "base_logloss": 1.0737,
+   "predicted_share": [
+    0.4267,
+    0.2484,
+    0.3249
+   ],
+   "actual_share": [
+    0.4369,
+    0.2389,
+    0.3242
+   ],
+   "picks_home_draw_away": [
+    1128,
+    30,
+    696
+   ]
+  }
+ },
+ "calibration": {
+  "home": {
+   "0-10%": {
+    "n": 285,
+    "mean_predicted": 0.0759,
+    "actual": 0.0947
+   },
+   "10-20%": {
+    "n": 1802,
+    "mean_predicted": 0.1595,
+    "actual": 0.2037
+   },
+   "20-30%": {
+    "n": 4222,
+    "mean_predicted": 0.2547,
+    "actual": 0.292
+   },
+   "30-40%": {
+    "n": 6169,
+    "mean_predicted": 0.3511,
+    "actual": 0.379
+   },
+   "40-50%": {
+    "n": 6475,
+    "mean_predicted": 0.4495,
+    "actual": 0.4364
+   },
+   "50-60%": {
+    "n": 5174,
+    "mean_predicted": 0.5472,
+    "actual": 0.5137
+   },
+   "60-70%": {
+    "n": 3273,
+    "mean_predicted": 0.645,
+    "actual": 0.6025
+   },
+   "70-80%": {
+    "n": 1663,
+    "mean_predicted": 0.7431,
+    "actual": 0.7288
+   },
+   "80-90%": {
+    "n": 646,
+    "mean_predicted": 0.8467,
+    "actual": 0.8266
+   }
+  },
+  "draw": {
+   "0-10%": {
+    "n": 265,
+    "mean_predicted": 0.0793,
+    "actual": 0.1208
+   },
+   "10-20%": {
+    "n": 4834,
+    "mean_predicted": 0.1687,
+    "actual": 0.1949
+   },
+   "20-30%": {
+    "n": 21662,
+    "mean_predicted": 0.2488,
+    "actual": 0.2618
+   },
+   "30-40%": {
+    "n": 2910,
+    "mean_predicted": 0.3229,
+    "actual": 0.2773
+   },
+   "40-50%": {
+    "n": 38,
+    "mean_predicted": 0.424,
+    "actual": 0.2632
+   }
+  },
+  "away": {
+   "0-10%": {
+    "n": 1708,
+    "mean_predicted": 0.0709,
+    "actual": 0.0785
+   },
+   "10-20%": {
+    "n": 5819,
+    "mean_predicted": 0.1555,
+    "actual": 0.1756
+   },
+   "20-30%": {
+    "n": 7661,
+    "mean_predicted": 0.25,
+    "actual": 0.2616
+   },
+   "30-40%": {
+    "n": 6545,
+    "mean_predicted": 0.3471,
+    "actual": 0.3335
+   },
+   "40-50%": {
+    "n": 4229,
+    "mean_predicted": 0.4462,
+    "actual": 0.4022
+   },
+   "50-60%": {
+    "n": 2262,
+    "mean_predicted": 0.5448,
+    "actual": 0.4894
+   },
+   "60-70%": {
+    "n": 1015,
+    "mean_predicted": 0.6429,
+    "actual": 0.5842
+   },
+   "70-80%": {
+    "n": 395,
+    "mean_predicted": 0.7433,
+    "actual": 0.7013
+   },
+   "80-90%": {
+    "n": 75,
+    "mean_predicted": 0.8431,
+    "actual": 0.7733
+   }
+  }
+ }
+}

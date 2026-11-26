@@ -1,0 +1,36 @@
+name: Football Lab daily run
+on:
+  workflow_dispatch:
+  push:
+    branches: [football-lab-dev]
+    paths: ['football-lab/daily/**', 'football-lab/engine/**', '.github/workflows/football-lab-daily.yml']
+  schedule:               # GitHub only honours schedules on the default branch; inactive until merged to main
+    - cron: '23 3,9,15,21 * * *'   # 06:23, 12:23, 18:23, 00:23 EAT; GitHub may start these late
+permissions:
+  contents: write
+concurrency:
+  group: football-lab-daily
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline tests
+        run: python football-lab/daily/test_run.py
+      - name: Daily run
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+          API_FOOTBALL_API_KEY: ${{ secrets.API_FOOTBALL_API_KEY }}
+        run: python football-lab/daily/run.py
+      - name: Commit frozen predictions, results and scoreboard
+        run: |
+          git config user.name "football-lab-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add football-lab/data/daily
+          git diff --cached --quiet || git commit -m "Football Lab: daily run $(date -u +'%Y-%m-%d %H:%M') UTC"
+          git push

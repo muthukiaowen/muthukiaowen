@@ -1,0 +1,12 @@
+{
+ "M1":{"label":"control","version":"M1-1.0","engine":"market","lineage":"market odds","independent_source":"yes: source 1 (market)","doc":"registered_rules.md"},
+ "A":{"label":"experimental","version":"A-1.0","engine":"market","lineage":"market odds; subset of M1's inputs","independent_source":"no: variation of source 1","doc":"registered_rules.md"},
+ "B":{"label":"experimental","version":"B-1.0","engine":"market","lineage":"market odds; subset of M1's inputs","independent_source":"no: variation of source 1","doc":"registered_rules.md"},
+ "M2":{"label":"experimental","version":"M2-1.0","engine":"market + table rule","lineage":"M1 pick with rule-based switches","independent_source":"no: variation of source 1","doc":"docs/M2_method_v1.0.md"},
+ "S1":{"label":"experimental","version":"S1-1.0","engine":"poisson, season totals, simulated","lineage":"season goal data","independent_source":"partly: source 2 (goal data), shared with S2, FID and C","doc":"scripts/sim_S1_round2_original.py"},
+ "C":{"label":"experimental","version":"C-1.0","engine":"poisson, S1 expected goals","lineage":"derived from S1","independent_source":"no: variation of source 2","doc":"registered_rules.md"},
+ "S2":{"label":"experimental","version":"S2-1.0","engine":"goals_core GC-1.1","lineage":"venue goal data","independent_source":"yes: source 2 (goal data)","doc":"docs/S2_method_v1.0.md"},
+ "FID-A":{"label":"experimental","version":"FID-v1.0","engine":"goals_core GC-1.1 + evidence rule","lineage":"S2 probabilities; pick differs only where the evidence rule fires","independent_source":"no: variation of source 2","doc":"data/prospective/fid_methodology_v1.0.md"},
+ "FID-F":{"label":"experimental","version":"FID-v1.0","engine":"goals_core GC-1.1 + evidence rule","lineage":"FID-A after market comparison","independent_source":"no: variation of source 2","doc":"data/prospective/fid_methodology_v1.0.md"},
+ "Shuffle":{"label":"baseline","version":"R-1.0","engine":"random","lineage":"none","independent_source":"baseline","doc":"registered_rules.md"}
+}
