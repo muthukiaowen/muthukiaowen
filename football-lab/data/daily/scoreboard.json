@@ -1,11 +1,11 @@
 {
- "generated_at_utc": "2026-11-26 15:50",
+ "generated_at_utc": "2026-11-26 15:57",
  "pipeline_version": "DAILY-1.0",
  "engine_version": "GC-1.1",
- "frozen_total": 0,
- "predictions": 0,
+ "frozen_total": 32,
+ "predictions": 32,
  "abstentions": 0,
- "awaiting_result": 0,
+ "awaiting_result": 32,
  "chain_intact": true,
  "overall": {
   "scored": 0
