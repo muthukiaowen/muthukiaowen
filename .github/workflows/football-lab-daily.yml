@@ -1,10 +1,7 @@
 name: Football Lab daily run
 on:
   workflow_dispatch:
-  push:
-    branches: [football-lab-dev]
-    paths: ['football-lab/daily/**', 'football-lab/engine/**', '.github/workflows/football-lab-daily.yml']
-  schedule:               # GitHub only honours schedules on the default branch; inactive until merged to main
+  schedule:
     - cron: '23 3,9,15,21 * * *'   # 06:23, 12:23, 18:23, 00:23 EAT; GitHub may start these late
 permissions:
   contents: write

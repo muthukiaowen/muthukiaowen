@@ -7,12 +7,16 @@ It is separate from the profile README in the repository root.
 
 ## What runs
 
-`daily/run.py` (DAILY-1.0), started by `.github/workflows/football-lab-daily.yml`:
+`daily/run.py` (DAILY-1.1), started by `.github/workflows/football-lab-daily.yml`:
 
 1. Retrieves results for predictions already frozen and scores them.
 2. Finds league fixtures kicking off in the next 48 hours.
 3. Calculates home / draw / away probabilities with the registered GC-1.1 model (`engine/labsys.py`), using only matches finished before the run.
 4. Freezes each prediction once, at least 15 minutes before kick-off. Rows are append-only and hash-chained; the workflow's commit is the timestamp.
+
+**Pick rule (DAILY-1.1, from 26 Nov 2026).** The pick is the most likely outcome, except that the draw is picked when the home and away probabilities are within 5 points of each other. The probabilities themselves are unchanged. The 5-point threshold is a first setting and has not been tested; the scoreboard reports draw picks separately and also what the plain most-likely pick would have scored. Rows frozen under DAILY-1.0 keep their original picks.
+
+**Sample.** At most 10 fixtures are frozen per kick-off day (Kenya time). They are chosen by a hash of the fixture ID, so nobody selects them.
 
 A fixture without enough history (fewer than 40 league matches, or fewer than 4 venue games for either team) is recorded as an abstention with no pick.
 

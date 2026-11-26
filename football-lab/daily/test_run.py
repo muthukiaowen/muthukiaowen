@@ -28,7 +28,8 @@ ck('fixture 5 minutes from kick-off is not frozen', '902' not in ids)
 ck('fixture beyond 48h is not frozen yet', '903' not in ids)
 p = [r for r in out['new_predictions'] if r['fixture_id'] == '901'][0]
 ck('probabilities sum to 1', abs(float(p['p_home']) + float(p['p_draw']) + float(p['p_away']) - 1) < 0.001)
-ck('pick is the most likely outcome', p['pick'] == 'HDA'[[float(p['p_home']), float(p['p_draw']), float(p['p_away'])].index(max(float(p['p_home']), float(p['p_draw']), float(p['p_away'])))])
+ck('pick follows the selection rule', p['pick'] == ('D' if abs(float(p['p_home']) - float(p['p_away'])) < R.DRAW_GAP else R.most_likely(p)))
+ck('draw rule picks the draw when home and away are close', R.select_pick(dict(p_home=.37, p_away=.34, most_likely='H'))[0] == 'D' and R.select_pick(dict(p_home=.45, p_away=.30, most_likely='H'))[0] == 'H')
 ck('one request per league', state['calls'] == len(R.LEAGUES))
 ck('hash chain verifies', R.verify_chain(R.rd('predictions.csv')))
 out2 = R.run(fetch=fetch, now=T0 + datetime.timedelta(hours=1), key='k', sleep=lambda s: None)
@@ -55,5 +56,11 @@ ck('rejected key or failed league is logged, nothing invented', 'PL:403' in out6
 state['fail'] = None; state['ms'] = [m for m in league() if m['status'] != 'FINISHED'][:1] + league()[:10]
 out7 = R.run(fetch=fetch, now=T0, key='k', sleep=lambda s: None)
 ck('too little history: abstain, no pick', all(r['status'] != 'ok' and r['pick'] == '' for r in out7['new_predictions']) and out7['new_predictions'])
+shutil.rmtree(tmp); tmp = tempfile.mkdtemp(); R.DATA = tmp
+big = league(); big += [dict(id=2000 + i, utcDate=iso(T0 + datetime.timedelta(hours=3)), status='TIMED', homeTeam=dict(id=1 + i % 5, name='a'), awayTeam=dict(id=6 + i % 5, name='b'), score=dict(fullTime=dict(home=None, away=None))) for i in range(30)]
+state['ms'] = big; o8 = R.run(fetch=fetch, now=T0, key='k', sleep=lambda s: None)
+ck('daily sample caps frozen fixtures per day', max(sum(1 for r in o8['new_predictions'] if r['kickoff_eat'][:10] == d) for d in {r['kickoff_eat'][:10] for r in o8['new_predictions']}) == R.DAILY_SAMPLE)
+o9 = R.run(fetch=fetch, now=T0 + datetime.timedelta(minutes=30), key='k', sleep=lambda s: None)
+ck('later run does not top up a full day', not [r for r in o9['new_predictions'] if r['kickoff_eat'][:10] == '2026-11-26'])
 shutil.rmtree(tmp)
 bad = [n for n, c in checks if not c]; print(f'{len(checks) - len(bad)} of {len(checks)} passed'); sys.exit(1 if bad else 0)

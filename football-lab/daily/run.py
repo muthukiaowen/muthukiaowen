@@ -1,4 +1,4 @@
-"""Football Intelligence Lab - daily automated run (DAILY-1.0).
+"""Football Intelligence Lab - daily automated run (DAILY-1.1).
 
 One run does three things, in this order:
   1. retrieve results for predictions already frozen, and score them
@@ -15,13 +15,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, '..', 'engine'))
 import labsys
 
-VERSION = 'DAILY-1.0'
+VERSION = 'DAILY-1.1'
 DATA = os.path.join(HERE, '..', 'data', 'daily')
 LEAGUES = ['PL', 'ELC', 'BL1', 'SA', 'PD', 'FL1', 'DED', 'PPL', 'BSA']   # league formats only; cups are not modelled
 UTC = datetime.timezone.utc
 EAT = datetime.timezone(datetime.timedelta(hours=3))
 WINDOW_H = 48          # freeze fixtures kicking off within this many hours
 MIN_LEAD_MIN = 15      # never freeze a fixture closer to kick-off than this
+DAILY_SAMPLE = 10      # at most this many fixtures frozen per kick-off day (EAT)
+DRAW_GAP = 0.05        # DAILY-1.1 draw rule: pick the draw when home and away probabilities are closer than this
 PRED_COLS = ['seq', 'fixture_id', 'competition', 'kickoff_utc', 'kickoff_eat', 'home', 'away', 'status', 'reason',
              'p_home', 'p_draw', 'p_away', 'pick', 'xg_home', 'xg_away', 'base_home', 'base_draw', 'base_away',
              'lg_matches', 'h_games', 'a_games', 'engine_version', 'pipeline_version', 'frozen_at_utc', 'prev_hash', 'row_hash']
@@ -69,6 +71,18 @@ def inputs_for(match, finished):
                 a_games=len(am), a_gf=sum(m[3] for m in am), a_ga=sum(m[2] for m in am))
 
 
+def most_likely(p): return 'HDA'[[float(p['p_home']), float(p['p_draw']), float(p['p_away'])].index(max(float(p['p_home']), float(p['p_draw']), float(p['p_away'])))]
+
+
+def select_pick(r):
+    """DAILY-1.1 selection. Probabilities are untouched; only the pick changes."""
+    if abs(r['p_home'] - r['p_away']) < DRAW_GAP: return 'D', 'draw rule: home and away within 5 points'
+    return r['most_likely'], ''
+
+
+def sample_rank(fid): return hashlib.sha256(('sample|' + str(fid)).encode()).hexdigest()
+
+
 def row_hash(row):
     body = '|'.join(str(row[c]) for c in PRED_COLS if c != 'row_hash')
     return hashlib.sha256(body.encode('utf-8')).hexdigest()
@@ -96,8 +110,9 @@ def scoreboard(preds, results, now):
         bp = [[float(p['base_home']), float(p['base_draw']), float(p['base_away'])] for p, _ in rs]
         o = [r['outcome'] for _, r in rs]
         hit = sum(p['pick'] == r['outcome'] for p, r in rs); lo, hi = labsys.wilson(hit, n)
+        dp = [(p, r) for p, r in rs if p['pick'] == 'D']
         return dict(scored=n, model_correct=hit, model_accuracy=round(hit / n, 4), accuracy_95ci=[round(lo, 4), round(hi, 4)],
-                    always_home_correct=o.count('H'), outcomes=dict(H=o.count('H'), D=o.count('D'), A=o.count('A')),
+                    most_likely_pick_correct=sum(most_likely(p) == r['outcome'] for p, r in rs), draw_picks=len(dp), draw_picks_correct=sum(r['outcome'] == 'D' for _, r in dp), always_home_correct=o.count('H'), outcomes=dict(H=o.count('H'), D=o.count('D'), A=o.count('A')),
                     model_brier=round(sum(brier(mp[i], o[i]) for i in range(n)) / n, 4), base_rate_brier=round(sum(brier(bp[i], o[i]) for i in range(n)) / n, 4),
                     model_log_loss=round(sum(logloss(mp[i], o[i]) for i in range(n)) / n, 4), base_rate_log_loss=round(sum(logloss(bp[i], o[i]) for i in range(n)) / n, 4),
                     mean_pick_probability=round(sum(max(x) for x in mp) / n, 4))
@@ -111,7 +126,8 @@ def scoreboard(preds, results, now):
                 frozen_total=len(preds), predictions=sum(p['status'] == 'ok' for p in preds), abstentions=sum(p['status'] != 'ok' for p in preds),
                 awaiting_result=sum(p['status'] == 'ok' and p['fixture_id'] not in res for p in preds), chain_intact=verify_chain(preds),
                 overall=block(rows), by_competition={c: block([x for x in rows if x[0]['competition'] == c]) for c in sorted({p['competition'] for p, _ in rows})},
-                by_day={d: block(v) for d, v in sorted(by_day.items())}, calibration=cal,
+                by_day={d: block(v) for d, v in sorted(by_day.items())},
+                by_pipeline_version={v: block([x for x in rows if x[0]['pipeline_version'] == v]) for v in sorted({p['pipeline_version'] for p, _ in rows})}, calibration=cal,
                 note='Benchmark is the league base rate at freeze time and an always-home pick. No bookmaker prices are collected, so there is no market comparison here.')
 
 
@@ -149,12 +165,20 @@ def run(fetch=http_fetch, now=None, key=None, sleep=time.sleep, trigger='manual'
                 if not (MIN_LEAD_MIN <= lead <= WINDOW_H * 60): continue
                 inp = inputs_for(m, fin); r = labsys.model(inp); good = r['status'] == 'ok'
                 new_p.append(dict(fixture_id=fid, competition=code, kickoff_utc=ko.strftime('%Y-%m-%d %H:%M'), kickoff_eat=ko.astimezone(EAT).strftime('%Y-%m-%d %H:%M'),
-                                  home=m['homeTeam']['name'], away=m['awayTeam']['name'], status=r['status'], reason=r['reason'],
-                                  p_home=r.get('p_home', ''), p_draw=r.get('p_draw', ''), p_away=r.get('p_away', ''), pick=r.get('most_likely', '') if good else '',
+                                  home=m['homeTeam']['name'], away=m['awayTeam']['name'], status=r['status'], reason=select_pick(r)[1] if good else r['reason'],
+                                  p_home=r.get('p_home', ''), p_draw=r.get('p_draw', ''), p_away=r.get('p_away', ''), pick=select_pick(r)[0] if good else '',
                                   xg_home=r.get('xg_home', ''), xg_away=r.get('xg_away', ''),
                                   base_home=round(base[0], 4) if n else '', base_draw=round(base[1], 4) if n else '', base_away=round(base[2], 4) if n else '',
                                   lg_matches=inp['lg_matches'], h_games=inp['h_games'], a_games=inp['a_games'],
                                   engine_version=labsys.ENGINE_VERSION, pipeline_version=VERSION, frozen_at_utc=now.strftime('%Y-%m-%d %H:%M:%S')))
+    used = {}                                                # sample: a fixed number per kick-off day, chosen by hash, not by judgement
+    for p in preds: used[p['kickoff_eat'][:10]] = used.get(p['kickoff_eat'][:10], 0) + 1
+    keep = []
+    for r in sorted(new_p, key=lambda r: sample_rank(r['fixture_id'])):
+        d = r['kickoff_eat'][:10]
+        if used.get(d, 0) < DAILY_SAMPLE: used[d] = used.get(d, 0) + 1; keep.append(r)
+    skipped = len(new_p) - len(keep); new_p = keep
+    if skipped: notes.append(f'{skipped} eligible fixtures outside the daily sample')
     new_p.sort(key=lambda r: (r['kickoff_utc'], r['fixture_id']))
     prev = preds[-1]['row_hash'] if preds else 'GENESIS'; seq = len(preds)
     for r in new_p:
