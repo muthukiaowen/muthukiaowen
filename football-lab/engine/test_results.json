@@ -1,0 +1,198 @@
+{
+ "passed": 48,
+ "total": 48,
+ "tests": [
+  {
+   "name": "fixtures validate",
+   "passed": true
+  },
+  {
+   "name": "evidence validates",
+   "passed": true
+  },
+  {
+   "name": "fact without a source is rejected",
+   "passed": true
+  },
+  {
+   "name": "unavailable source is recorded as unknown, not guessed",
+   "passed": true
+  },
+  {
+   "name": "probabilities blocked until three-outcome assessment exists",
+   "passed": true
+  },
+  {
+   "name": "a fixture with only two outcomes assessed is incomplete",
+   "passed": true
+  },
+  {
+   "name": "possibility citing non-existent evidence is rejected",
+   "passed": true
+  },
+  {
+   "name": "probabilities total 100%",
+   "passed": true
+  },
+  {
+   "name": "ranges contain the estimate",
+   "passed": true
+  },
+  {
+   "name": "second outcome and three scorelines reported",
+   "passed": true
+  },
+  {
+   "name": "too few venue games returns insufficient evidence",
+   "passed": true
+  },
+  {
+   "name": "no model inputs returns insufficient evidence",
+   "passed": true
+  },
+  {
+   "name": "worked example reproduces 49.3 / 17.9 / 32.8",
+   "passed": true
+  },
+  {
+   "name": "market probabilities total 100%",
+   "passed": true
+  },
+  {
+   "name": "latest snapshot used and movement recorded",
+   "passed": true
+  },
+  {
+   "name": "missing price gives an incomplete market record",
+   "passed": true
+  },
+  {
+   "name": "level prices give no favourite",
+   "passed": true
+  },
+  {
+   "name": "M1 uses the declared home tie-break when level",
+   "passed": true
+  },
+  {
+   "name": "no M1 row where the market record is incomplete",
+   "passed": true
+  },
+  {
+   "name": "no model row where evidence is insufficient",
+   "passed": true
+  },
+  {
+   "name": "override fires only on confirmed factors, counted once per cause",
+   "passed": true
+  },
+  {
+   "name": "override never changes the probabilities",
+   "passed": true
+  },
+  {
+   "name": "disputed report does not count as a factor",
+   "passed": true
+  },
+  {
+   "name": "lineage recorded: FID is not an independent source",
+   "passed": true
+  },
+  {
+   "name": "coverage: two sources per team is high",
+   "passed": true
+  },
+  {
+   "name": "freeze refused without a review",
+   "passed": true
+  },
+  {
+   "name": "review lists coverage, skips and hashes",
+   "passed": true
+  },
+  {
+   "name": "freeze refused without explicit approval",
+   "passed": true
+  },
+  {
+   "name": "freeze refused after kick-off",
+   "passed": true
+  },
+  {
+   "name": "freeze refused if files changed after the review",
+   "passed": true
+  },
+  {
+   "name": "freeze records approval, version and SHA-256 hashes",
+   "passed": true
+  },
+  {
+   "name": "frozen round refuses recalculation",
+   "passed": true
+  },
+  {
+   "name": "frozen round refuses rebuilding predictions",
+   "passed": true
+  },
+  {
+   "name": "untouched frozen files verify",
+   "passed": true
+  },
+  {
+   "name": "tampering with a frozen prediction is detected",
+   "passed": true
+  },
+  {
+   "name": "a tampered round is not scored",
+   "passed": true
+  },
+  {
+   "name": "correction is a separate record; frozen file unchanged",
+   "passed": true
+  },
+  {
+   "name": "postponed match needs a settlement treatment",
+   "passed": true
+  },
+  {
+   "name": "changing a result needs a reason",
+   "passed": true
+  },
+  {
+   "name": "corrected result supersedes, original kept",
+   "passed": true
+  },
+  {
+   "name": "only played fixtures are scored",
+   "passed": true
+  },
+  {
+   "name": "frozen pick is scored, not the correction",
+   "passed": true
+  },
+  {
+   "name": "four-way market comparison adds up",
+   "passed": true
+  },
+  {
+   "name": "Brier, log loss and calibration from frozen probabilities",
+   "passed": true
+  },
+  {
+   "name": "override scored against the core selection",
+   "passed": true
+  },
+  {
+   "name": "coverage and league breakdowns present",
+   "passed": true
+  },
+  {
+   "name": "draw test withheld below 120 fixtures",
+   "passed": true
+  },
+  {
+   "name": "dashboard state built from the operational files",
+   "passed": true
+  }
+ ]
+}
