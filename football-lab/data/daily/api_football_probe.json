@@ -1,24 +1,24 @@
 {
- "checked_at_utc": "2026-11-27 03:40",
+ "checked_at_utc": "2026-11-27 19:04",
  "status_http": 200,
  "plan": "Free",
  "active": true,
  "requests": {
-  "current": 0,
+  "current": 1,
   "limit_day": 100
  },
  "status_errors": "[]",
  "fixtures_today_http": 200,
- "fixtures_today_count": 337,
+ "fixtures_today_count": 339,
  "fixtures_today_errors": "[]",
  "fixtures_today_leagues": 158,
  "fixtures_today_sample": {
   "Israel - Liga Alef": 14,
+  "World - Friendlies Women": 8,
   "Saudi-Arabia - Division 2": 8,
   "World - World Cup - U17": 8,
   "Wales - FAW Championship": 8,
   "Netherlands - Eerste Divisie": 7,
-  "World - Friendlies Women": 6,
   "Georgia - Liga 3": 6,
   "Wales - Premier League": 6,
   "Moldova - Liga 1": 5,
