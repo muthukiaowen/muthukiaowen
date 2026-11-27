@@ -1,7 +1,7 @@
 # Manual research run - Saturday 28 Nov 2026 fixtures, exploratory pair analysis
 
 - Trigger: MANUAL (requested by the owner in chat). Not a scheduled GitHub execution.
-- Executed: 2026-11-27 20:25-20:50 EAT (17:25-17:50 UTC), by Claude in a chat session.
+- Executed: 2026-11-27 20:24-20:30 EAT (17:24-17:30 UTC), by Claude in a chat session.
 - Pipeline run on GitHub: none. No prediction was frozen or changed by this run.
 - Status: exploratory. Not a registered method. No pair has a tested track record.
 
@@ -10,7 +10,7 @@ The 23 fixtures kicking off on 28 Nov (EAT) that the Lab froze on 26 Nov 2026 15
 SportPesa's fixture list and odds were not collected (terms clauses 19.1, 24.1, 25.3). Reconciliation and market comparison: not done.
 
 ## Researched in depth: the nine fixtures with a frozen pick probability of 0.60 or more
-Venue records: Wikipedia season results grids, read 27 Nov 20:30 EAT. Availability: starting11.com fixture pages (single source, "reported availability, not a confirmed team sheet").
+Venue records: Wikipedia season results grids, read 27 Nov 20:26 EAT. Availability: starting11.com fixture pages (single source, "reported availability, not a confirmed team sheet").
 
 | Fixture | Frozen pick | p | Home team at home (P-W-D-L, GF-GA) | Away team away | Reported absences | Pairing |
 |---|---|---|---|---|---|---|
