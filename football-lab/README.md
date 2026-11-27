@@ -36,6 +36,8 @@ A fixture without enough history (fewer than 40 league matches, or fewer than 4 
 - Source: football-data.org free plan, 9 league competitions (PL, ELC, BL1, SA, PD, FL1, DED, PPL, BSA). Cups are not modelled.
 - No bookmaker prices are collected, so the benchmark here is the league base rate and an always-home pick, not the market.
 - The model uses goals only. It knows nothing about injuries, line-ups or tactics.
+- Known sampling bias (recorded 27 Nov 2026, rule unchanged during verification): the hash only ranks fixtures within one run, so fixtures that enter the 48-hour window first take the day's 10 slots. Early kick-offs are favoured. The 32 rows frozen on 26 Nov predate the cap and are not a sample.
+- A scheduled slot that GitHub never starts leaves no record. The 00:23 EAT slot on 27 Nov did not run.
 - Scheduled runs can start late; a fixture missed inside the 15-minute limit is simply not predicted.
 - This is research, not betting advice. Past back-test accuracy was about 49% on three-way outcomes.
 
