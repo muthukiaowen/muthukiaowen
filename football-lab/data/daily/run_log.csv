@@ -1,3 +1,4 @@
 run_at_utc,trigger,requests,leagues_ok,leagues_failed,new_predictions,new_abstentions,new_results,notes
 2026-11-26 15:50,push,9,,PL:400 ELC:400 BL1:400 SA:400 PD:400 FL1:400 DED:400 PPL:400 BSA:400,0,0,0,
 2026-11-26 15:57,push,9,PL ELC BL1 SA PD FL1 DED PPL BSA,,32,0,0,
+2026-11-27 03:40,schedule,9,PL ELC BL1 SA PD FL1 DED PPL BSA,,1,0,1,15 eligible fixtures outside the daily sample
